@@ -10,6 +10,12 @@ namespace DemoProject
     [TestClass]
     public class UnitTest1
     {
+        [ClassInitialize]
+        public void setup()
+        {
+            BaseClass.InitializeDriver("Chrome");
+        }
+
         LoginPO objLoginPO = new LoginPO();
         Helper objHelper = new Helper();
         LoginPE objLoginPE = new LoginPE();
@@ -17,13 +23,20 @@ namespace DemoProject
         [TestMethod]
         public void LoginToApplication()
         {
-            BaseClass.InitializeDriver("Chrome");
+            
             string applicationUrl = "https://s1.demo.opensourcecms.com/wordpress/wp-login.php";
             objHelper.BrowseApplicationUrl(applicationUrl);
             objLoginPO.LoginToApplication("opensourcecms", "opensourcecms");
             if (objHelper.isElementDisplayed(objLoginPE.welcomePanel, 20))
             {
             }
+        }
+
+        
+
+        [ClassCleanup]
+        public void cleanup()
+        {
         }
     }
 }
